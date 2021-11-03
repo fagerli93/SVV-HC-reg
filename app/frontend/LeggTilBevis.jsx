@@ -1,6 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
     KJONN_MANN,
     KJONN_KVINNE,
@@ -21,21 +20,23 @@ import {
 } from "./redux/bevisAction.js";
 
 const LeggTilBevis = ({ props }) => {
+    const [bevis, setBevis] = useState({});
+    const history = useHistory();
     const lagreBevis = event => {
         event.preventDefault();
-        props.dispatch(leggTilBevis(props.bevis));
-        props.dispatch(clearBevis());
-        props.history.push("/");
+        // props.dispatch(leggTilBevis(props.bevis));
+        // props.dispatch(clearBevis());
+        history.push("/");
     };
 
     const avbryt = event => {
         event.preventDefault();
-        props.dispatch(clearBevis());
-        props.history.push("/");
+        // props.dispatch(clearBevis());
+        history.push("/");
     };
 
-    const bevis = props.bevis;
-    const dispatch = props.dispatch;
+    //const bevis = props.bevis;
+    //const dispatch = props.dispatch;
     return (
         <div className='blokk'>
             <h1>Registeret</h1>
@@ -43,7 +44,7 @@ const LeggTilBevis = ({ props }) => {
                 <h2 className='blokk-heading'>Legg til nytt bevis</h2>
                 <form
                     className='blokk-innhold'
-                    onSubmit={event => lagreBevis(event, bevis, dispatch)}>
+                    onSubmit={event => lagreBevis(event, bevis)}>
                     <div className='form-input'>
                         <div className='input-gruppe'>
                             <label htmlFor='navn'>Navn</label>
@@ -183,14 +184,17 @@ const LeggTilBevis = ({ props }) => {
     );
 };
 
-LeggTilBevis.propTypes = {
-    history: PropTypes.object.isRequired,
-};
+export default LeggTilBevis;
 
-const mapStateToProps = state => {
-    return {
-        bevis: state.bevis,
-    };
-};
+// LeggTilBevis.propTypes = {
+//     history: PropTypes.object.isRequired,
+// };
 
-export default connect(mapStateToProps)(LeggTilBevis);
+// const mapStateToProps = state => {
+//     console.log(state);
+//     return {
+//         bevis: state.bevis,
+//     };
+// };
+
+// export default connect({ mapStateToProps })(LeggTilBevis);
